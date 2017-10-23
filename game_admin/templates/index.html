@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  当前用户：{{user.username}},
+  <a href="{% url 'admin_logout' %}">登出</a><br>
+  <form action="{% url 'filter_regtime' %}" method="POST">
+    {%csrf_token%}
+    <input type="text" placeholder="请输入起始年" name='year_from'>
+    <input type="text" placeholder="请输入起始月" name='month_from'>
+    <input type="text" placeholder="请输入起始日" name='day_from'>
+    <input type="text" placeholder="请输入截止年" name='year_to'>
+    <input type="text" placeholder="请输入截止月" name='month_to'>
+    <input type="text" placeholder="请输入截止日" name='day_to'>
+    <input type="submit" value="注册时间查询">
+  </form>
+  <form action="{% url 'filter_player' %}" method="POST">
+    {%csrf_token%}
+    <select name="playerid" id="">
+      {% for player in playerlist %}
+        <option value="{{ player.playerid }}">{{ player.playerid }}</option>
+      {% empty %}
+        <option value="">空</option>
+      {% endfor %}
+    </select>
+    <input type="text" placeholder="请输入起始年" name='year_from'>
+    <input type="text" placeholder="请输入起始月" name='month_from'>
+    <input type="text" placeholder="请输入起始日" name='day_from'>
+    <input type="text" placeholder="请输入截止年" name='year_to'>
+    <input type="text" placeholder="请输入截止月" name='month_to'>
+    <input type="text" placeholder="请输入截止日" name='day_to'>
+    <input type="submit" value="玩家金币查询">
+  </form>
+
+  所有玩家信息
+  <table>
+    <tr>
+      <th>玩家ID</th>
+      <th>玩家姓名</th>
+      <th>玩家等级</th>
+      <th>玩家经验</th>
+      <th>注册时间</th>
+    </tr>
+    {% for player in playerlist %}
+      <tr>
+        <th>{{ player.playerid }}</th>
+        <th>{{ player.playername }}</th>
+        <th>{{ player.level }}</th>
+        <th>{{ player.experience }}</th>
+        <th>{{ player.regtime }}</th>
+      </tr>
+    {% empty %}
+      暂无玩家注册
+    {% endfor %}
+  </table>
+
+  所有金币变化数据
+  <table>
+    <tr>
+      <th>玩家ID</th>
+      <th>服务器ID</th>
+      <th>金币变化数量</th>
+      <th>金币剩余数量</th>
+      <th>金币变化时间</th>
+    </tr>
+    {% for player in goldlist %}
+      <tr>
+        <th>{{ player.playerid }}</th>
+        <th>{{ player.serverid }}</th>
+        <th>{{ player.gold_change }}</th>
+        <th>{{ player.gold }}</th>
+        <th>{{ player.gold_change_time }}</th>
+      </tr>
+    {% empty %}
+      空
+    {% endfor %}
+  </table>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <a href="{% url 'index' %}">首页</a>
+  <a href="{% url 'admin_logout' %}">登出</a><br>
+  金币变化数据
+  <table>
+    <tr>
+      <th>玩家ID</th>
+      <th>服务器ID</th>
+      <th>金币变化数量</th>
+      <th>金币剩余数量</th>
+      <th>金币变化时间</th>
+    </tr>
+    {% for player in goldfilter %}
+      <tr>
+        <th>{{ player.playerid }}</th>
+        <th>{{ player.serverid }}</th>
+        <th>{{ player.gold_change }}</th>
+        <th>{{ player.gold }}</th>
+        <th>{{ player.gold_change_time }}</th>
+      </tr>
+    {% empty %}
+      空
+    {% endfor %}
+  </table>
+</body>
+</html>
